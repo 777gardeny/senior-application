@@ -93,8 +93,19 @@
     <div class="course-header">과정 신청 지역 및 교육 기간 (하나만 선택 가능)</div>
     <div class="course-item"><input type="radio" id="c1" name="course"><label for="c1">서울 5월 12~15일<span>서울 금천구 가산디지털1로 168 A동 306호</span></label></div>
     <div class="course-item"><input type="radio" id="c2" name="course"><label for="c2">서울 5월 18~22일<span>서울 금천구 가산디지털1로 168 A동 306호</span></label></div>
+    <div class="course-item"><input type="radio" id="c3" name="course"><label for="c3">서울 5월 26~29일<span>서울 금천구 가산디지털1로 168 A동 306호</span></label></div>
+    <div class="course-item"><input type="radio" id="c4" name="course"><label for="c4">서울 주말반 5월 2~3, 9~10일<span>서울 금천구 가산디지털1로</span></label></div>
+    <div class="course-item"><input type="radio" id="c5" name="course"><label for="c5">인천 5월 12~15일<span>인천시 남동구 간석로48 / 계양구 장제로899</span></label></div>
+    <div class="course-item"><input type="radio" id="c6" name="course"><label for="c6">부산 5월 6~8일<span>부산시 부산진구 서면로 39 5층</span></label></div>
     <div class="course-item highlighted"><input type="radio" id="c7" name="course"><label for="c7">대구 4월 27~29일 ★<span>대구시 동구 동부로174 동대구역인근</span></label></div>
-    </div>
+    <div class="course-item"><input type="radio" id="c8" name="course"><label for="c8">대전 5월 12~15일<span>대전시 유성구 대학로 99, 902호 충남대</span></label></div>
+    <div class="course-item"><input type="radio" id="c9" name="course"><label for="c9">광주 5월 12~15일<span>광주광역시 동구 천변우로 339, 901호</span></label></div>
+    <div class="course-item"><input type="radio" id="c10" name="course"><label for="c10">완주 5월 12~15일<span>전북 완주 봉동동서로 110 2층</span></label></div>
+    <div class="course-item"><input type="radio" id="c11" name="course"><label for="c11">남원 5월 12~15일<span>전북 남원시 전령길 51 2층</span></label></div>
+    <div class="course-item"><input type="radio" id="c12" name="course"><label for="c12">순천 5월 12~15일<span>전남 순천 해룡면 향매로75, 105호</span></label></div>
+  </div>
+
+  <div class="note">※ 모집 상황에 따라 일정 또는 장소가 일부 변동될 수 있습니다.</div>
 
   <div class="section-title" style="margin-top:1.25rem">개인정보 수집 및 이용 동의</div>
   <div class="field-group">
@@ -115,11 +126,12 @@
 </div>
 
 <script>
-// 1. [핵심] 페이지 접속 시 URL에서 tid와 campaignkey를 미리 챙겨둡니다.
+// URL 파라미터(tid, campaignkey) 추출
 const urlParams = new URLSearchParams(window.location.search);
 const tid = urlParams.get('tid');
 const campaignkey = urlParams.get('campaignkey');
 
+// 리스트 클릭 시 라디오 버튼 선택
 document.querySelectorAll('.course-item').forEach(item => {
   item.addEventListener('click', function(e) {
     if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
@@ -146,10 +158,9 @@ function handleSubmit() {
   submitBtn.disabled = true;
   submitBtn.textContent = '처리 중...';
 
-  // [본인의 구글 URL로 꼭 변경하세요]
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbwFtusnkE6PVJuxAHAKQTFm3feZz2g6cDKd7Myi1w3MltKhKwhg09Zp-4499XsdoLZ-mQ/exec';
 
-  // 1. 구글 시트로 데이터 전송 (tid 정보도 함께 보내주면 나중에 대조하기 좋습니다)
+  // 1. DB 전송
   fetch(scriptUrl, {
     method: 'POST',
     mode: 'no-cors',
@@ -157,15 +168,12 @@ function handleSubmit() {
     body: JSON.stringify({ name, phone, age: ages, course: courseName, tid: tid })
   })
   .then(() => {
-    // 2. 구글 전송 후 애드팝콘 콜백 호출 (방식 2 적용)
+    // 2. 애드팝콘 콜백 처리 (방식 2)
     if(typeof AdPopcorn !== 'undefined') {
-      // 애드팝콘 서버에 완료 신호를 보냅니다.
       AdPopcorn.cpaCompleted(function() {
-        showSuccessUI(); // 콜백을 받은 후 UI를 바꿉니다.
+        showSuccessUI();
       });
-      
-      // 만약 애드팝콘 서버 응답이 너무 느릴 경우를 대비해 1.5초 후 강제 완료 처리
-      setTimeout(() => showSuccessUI(), 1500);
+      setTimeout(() => showSuccessUI(), 1500); // 1.5초 안전장치
     } else {
       showSuccessUI();
     }
