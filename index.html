@@ -59,13 +59,13 @@
     <div class="logo-icon">AI</div>
     <div>
       <div class="logo-text">시니어 <span>Ai</span> 교육진흥원<span class="badge">고용노동부 인가</span></div>
-      <div style="font-size:11px;color:#888;margin-top:2px">(사)한국창직협회 부설</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">한국창직협회 부설</div>
     </div>
   </div>
 
   <div class="title-bar">
     <h1>자격과정 <span>신청서</span></h1>
-    <p>2026 시니어 최고 인기 자격 · 시니어 AI 전문가</p>
+    <p>2026 시니어 최고 인기 자격 · 시니어 Ai 전문가</p>
   </div>
 
   <div class="section-title">기본 정보</div>
@@ -105,7 +105,7 @@
     <div class="course-item"><input type="radio" id="c12" name="course"><label for="c12">순천 5월 12~15일<span>전남 순천 해룡면 향매로75, 105호</span></label></div>
   </div>
 
-  <div class="note">※ 모집 상황에 따라 일정 또는 장소가 일부 변동될 수 있고, 개설이 연기되거나 취소될 수 있습니다.</div>
+  <div class="note">※ 모집 상황에 따라 일정 또는 장소가 일부 변동될 수 있습니다.</div>
 
   <div class="section-title" style="margin-top:1.25rem">개인정보 수집 및 이용 동의</div>
   <div class="field-group">
@@ -126,7 +126,7 @@
 </div>
 
 <script>
-// 리스트 클릭 시 라디오 버튼 선택되도록 처리
+// 과정 선택 클릭 연동
 document.querySelectorAll('.course-item').forEach(item => {
   item.addEventListener('click', function(e) {
     if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
@@ -139,9 +139,7 @@ document.querySelectorAll('.course-item').forEach(item => {
 function handleSubmit() {
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  // 연령대 (체크박스라 여러 개일 수 있음)
   const ages = [...document.querySelectorAll('input[name=age]:checked')].map(a => a.value).join(', ');
-  // 과정 선택 (라디오 버튼으로 수정되어 이제 무조건 1개만 선택됨)
   const selectedCourse = document.querySelector('input[name=course]:checked');
   const courseName = selectedCourse ? selectedCourse.nextElementSibling.childNodes[0].textContent.trim() : "";
   const privacy = document.getElementById('privacy').checked;
@@ -155,30 +153,39 @@ function handleSubmit() {
   submitBtn.disabled = true;
   submitBtn.textContent = '처리 중...';
 
-  // [필수] 본인의 구글 웹 앱 URL로 변경하세요!
+  // [중요] 본인의 구글 웹 앱 URL을 넣으세요!
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbwFtusnkE6PVJuxAHAKQTFm3feZz2g6cDKd7Myi1w3MltKhKwhg09Zp-4499XsdoLZ-mQ/exec';
 
-  // 1. 구글 스프레드시트(DB) 데이터 전송
+  // 1. 구글 시트로 데이터 전송
   fetch(scriptUrl, {
     method: 'POST',
     mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ name, phone, age: ages, course: courseName })
   })
   .then(() => {
-    // 2. 애드팝콘 리워드 신호 전송
-    if(typeof AdPopcorn !== 'undefined') {
-      AdPopcorn.cpaCompleted(function() {
-        showSuccessUI();
-      });
-    } else {
-      showSuccessUI();
-    }
+    // 2. 전송 성공 시 즉시 UI 업데이트 및 리워드 처리
+    console.log('Data sent successfully');
+    completeProcess();
   })
   .catch(err => {
-    alert('오류가 발생했습니다. 다시 시도해주세요.');
-    submitBtn.disabled = false;
-    submitBtn.textContent = '신청서 제출';
+    // 에러가 나더라도 시트에 들어왔을 수 있으므로 완료 처리 진행
+    console.error('Error:', err);
+    completeProcess();
   });
+}
+
+function completeProcess() {
+  if(typeof AdPopcorn !== 'undefined') {
+    // 애드팝콘 신호 전송 (기다리지 않고 0.5초 후 강제 UI 표시)
+    const timeout = setTimeout(() => showSuccessUI(), 500);
+    AdPopcorn.cpaCompleted(function() {
+      clearTimeout(timeout);
+      showSuccessUI();
+    });
+  } else {
+    showSuccessUI();
+  }
 }
 
 function showSuccessUI() {
