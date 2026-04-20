@@ -1,55 +1,90 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>시니어 Ai 전문가 자격과정 신청서</title>
-  <!-- 애드팝콘 CPA 스크립트 선언 -->
-  <script src="//webapi.adpopcorn.com/offerwall/postback/js/adpopcorn-cpa.1.2.js"></script>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-    body{font-family:"Noto Sans KR",sans-serif;background:#f5f5f5}
-    .wrap{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
-    .logo-bar{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid #ddd}
-    .logo-icon{width:40px;height:40px;background:#1565C0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0}
-    .logo-text{font-size:18px;font-weight:700;color:#111}
-    .logo-text span{color:#1565C0}
-    .badge{font-size:11px;background:#E3F2FD;color:#0C447C;border-radius:4px;padding:2px 8px;margin-left:8px}
-    .title-bar{text-align:center;margin-bottom:1.5rem}
-    .title-bar h1{font-size:20px;font-weight:700;color:#111}
-    .title-bar h1 span{color:#1565C0}
-    .title-bar p{font-size:12px;color:#888;margin-top:4px}
-    .detail-img{width:calc(100% + 2rem);margin-left:-1rem;display:block;margin-bottom:1.5rem}
-    .section-title{font-size:13px;font-weight:500;color:#fff;background:#1565C0;padding:7px 14px;border-radius:6px 6px 0 0;margin-top:1.25rem;letter-spacing:0.3px}
-    .field-group{border:0.5px solid #ddd;border-top:none;border-radius:0 0 8px 8px;overflow:hidden;margin-bottom:0.25rem;background:#fff}
-    .field-row{display:flex;flex-direction:column;padding:12px 14px;border-bottom:0.5px solid #eee;background:#fff}
-    .field-row:last-child{border-bottom:none}
-    .field-label{font-size:12px;color:#666;margin-bottom:6px}
-    .field-row input[type=text],.field-row input[type=tel]{width:100%;border:1px solid #ddd;border-radius:8px;padding:11px 14px;font-size:16px;background:#fafafa;color:#111;outline:none;-webkit-appearance:none}
-    .field-row input:focus{border-color:#1565C0;box-shadow:0 0 0 3px rgba(21,101,192,0.1);background:#fff}
-    .age-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
-    .age-item{display:flex;align-items:center;gap:0;cursor:pointer}
-    .age-item input[type=checkbox]{display:none}
-    .age-label{display:flex;align-items:center;justify-content:center;width:100%;padding:11px 8px;border:1.5px solid #ddd;border-radius:10px;font-size:14px;color:#555;background:#fafafa;cursor:pointer;transition:all 0.15s;text-align:center;font-weight:400;-webkit-user-select:none;user-select:none}
-    .age-item input[type=checkbox]:checked + .age-label{border-color:#1565C0;background:#E3F2FD;color:#1565C0;font-weight:500}
-    .course-section{border:0.5px solid #ddd;border-radius:8px;overflow:hidden;margin-top:1.25rem}
-    .course-header{background:#E65100;color:#fff;padding:9px 14px;font-size:13px;font-weight:500}
-    .course-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:0.5px solid #eee;background:#fff;cursor:pointer;transition:background 0.12s;-webkit-user-select:none;user-select:none}
-    .course-item:last-child{border-bottom:none}
-    .course-item input[type=radio]{width:18px;height:18px;margin-top:1px;accent-color:#1565C0;flex-shrink:0;cursor:pointer}
-    .course-item label{font-size:14px;color:#111;cursor:pointer;line-height:1.5}
-    .course-item label span{font-size:11px;color:#888;display:block;margin-top:2px}
-    .course-item.highlighted{background:#FFF8F5}
-    .note{font-size:11px;color:#E65100;margin-top:1rem;line-height:1.6;padding:8px 12px;border-left:3px solid #E65100;background:#FFF3E0;border-radius:0 6px 6px 0}
-    .privacy-check{display:flex;align-items:flex-start;gap:8px}
-    .privacy-check input{width:18px;height:18px;margin-top:2px;accent-color:#1565C0;flex-shrink:0;cursor:pointer}
-    .privacy-check label{font-size:13px;color:#111;cursor:pointer;line-height:1.6}
-    .submit-btn{width:100%;margin-top:1.5rem;padding:15px;background:#1565C0;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer;letter-spacing:0.3px;transition:background 0.15s;-webkit-appearance:none}
-    .submit-btn:active{background:#0D47A1;transform:scale(0.99)}
-    .submit-btn:disabled{background:#ccc;cursor:not-allowed}
-    .success-msg{display:none;background:#E3F2FD;border:0.5px solid #90CAF9;border-radius:10px;padding:20px;text-align:center;margin-top:1.5rem;color:#0C447C;font-size:15px;line-height:1.8}
-    .success-msg b{color:#E65100;font-size:14px;display:block;margin-top:8px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>시니어 Ai 전문가 자격과정 신청서</title>
+<!-- 애드팝콘 CPA 스크립트 선언 -->
+<script src="//webapi.adpopcorn.com/offerwall/postback/js/adpopcorn-cpa.1.2.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:"Noto Sans KR",sans-serif;background:#f5f5f5}
+  .wrap{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
+  .logo-bar{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid #ddd}
+  .logo-icon{width:40px;height:40px;background:#1565C0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0}
+  .logo-text{font-size:18px;font-weight:700;color:#111}
+  .logo-text span{color:#1565C0}
+  .badge{font-size:11px;background:#E3F2FD;color:#0C447C;border-radius:4px;padding:2px 8px;margin-left:8px}
+  .title-bar{text-align:center;margin-bottom:1.5rem}
+  .title-bar h1{font-size:20px;font-weight:700;color:#111}
+  .title-bar h1 span{color:#1565C0}
+  .title-bar p{font-size:12px;color:#888;margin-top:4px}
+  .detail-img{width:calc(100% + 2rem);margin-left:-1rem;display:block;margin-bottom:1.5rem}
+  .section-title{font-size:13px;font-weight:500;color:#fff;background:#1565C0;padding:7px 14px;border-radius:6px 6px 0 0;margin-top:1.25rem;letter-spacing:0.3px}
+  .field-group{border:0.5px solid #ddd;border-top:none;border-radius:0 0 8px 8px;overflow:hidden;margin-bottom:0.25rem;background:#fff}
+  .field-row{display:flex;flex-direction:column;padding:12px 14px;border-bottom:0.5px solid #eee;background:#fff}
+  .field-row:last-child{border-bottom:none}
+  .field-label{font-size:12px;color:#666;margin-bottom:6px}
+  .field-row input[type=text],.field-row input[type=tel]{width:100%;border:1px solid #ddd;border-radius:8px;padding:11px 14px;font-size:16px;background:#fafafa;color:#111;outline:none;-webkit-appearance:none;transition:border-color 0.15s,background 0.15s}
+  .field-row input[type=tel]{letter-spacing:0.5px;font-variant-numeric:tabular-nums}
+  .field-row input:focus{border-color:#1565C0;background:#fff}
+  .field-row input.invalid{border-color:#E53935;background:#FFF5F5}
+  .field-row input[readonly]{background:#f8f9fa;color:#555;cursor:not-allowed;border-color:#e5e7eb}
+  .field-row input[readonly].filled{background:#E8F5E9;color:#1B5E20;border-color:#A5D6A7;font-weight:600}
+  .cert-info{display:flex;align-items:center;gap:10px;padding:13px 14px;background:#FFF8E1;border-bottom:0.5px solid #FFE0B2;color:#5D4037;font-size:13px;line-height:1.55}
+  .cert-info-icon{flex-shrink:0;width:22px;height:22px;background:#FF9800;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .cert-info strong{color:#E65100;font-weight:700}
+  .cert-group{display:flex;gap:12px;align-items:stretch;padding:14px;background:#fff;border-bottom:0.5px solid #eee}
+  .cert-inputs-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+  .cert-inputs-col .field-row{margin:0;padding:0;border:none;background:transparent}
+  .cert-group .cert-btn{flex:0 0 110px;margin:0;padding:14px 10px;border-radius:10px;background:linear-gradient(135deg,#1E88E5 0%,#1565C0 100%);color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px;border:none;cursor:pointer;box-shadow:0 3px 10px rgba(21,101,192,0.3);transition:all 0.2s cubic-bezier(0.4,0,0.2,1);display:flex;align-items:center;justify-content:center;line-height:1.3;text-align:center;-webkit-appearance:none}
+  .cert-group .cert-btn:hover:not(:disabled){box-shadow:0 5px 14px rgba(21,101,192,0.42);transform:translateY(-1px)}
+  .cert-group .cert-btn:active:not(:disabled){transform:translateY(0);box-shadow:0 2px 8px rgba(21,101,192,0.25)}
+  .cert-group .cert-btn:disabled{background:linear-gradient(135deg,#B0BEC5 0%,#90A4AE 100%);box-shadow:none;color:#fff;cursor:not-allowed;opacity:0.9;animation:none}
+  .cert-group .cert-btn.done{background:linear-gradient(135deg,#66BB6A 0%,#43A047 100%);box-shadow:0 3px 10px rgba(67,160,71,0.32);animation:none}
+  .cert-group .cert-btn:not(.done):not(:disabled){animation:certPulse 2.2s ease-in-out infinite}
+  @keyframes certPulse{0%,100%{box-shadow:0 3px 10px rgba(21,101,192,0.3)}50%{box-shadow:0 5px 20px rgba(21,101,192,0.55)}}
+  .field-hint{margin-top:6px;font-size:12px;color:#888;line-height:1.5}
+  .field-hint.error{color:#E53935}
+  .field-row input:focus{border-color:#1565C0;box-shadow:0 0 0 3px rgba(21,101,192,0.1);background:#fff}
+  .age-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+  .age-item{display:flex;align-items:center;gap:0;cursor:pointer}
+  .age-item input[type=checkbox]{display:none}
+  .age-label{display:flex;align-items:center;justify-content:center;width:100%;padding:11px 8px;border:1.5px solid #ddd;border-radius:10px;font-size:14px;color:#555;background:#fafafa;cursor:pointer;transition:all 0.15s;text-align:center;font-weight:400;-webkit-user-select:none;user-select:none}
+  .age-item input[type=checkbox]:checked + .age-label{border-color:#1565C0;background:#E3F2FD;color:#1565C0;font-weight:500}
+  .course-section{border:0.5px solid #ddd;border-radius:8px;overflow:hidden;margin-top:1.25rem}
+  .course-header{background:#E65100;color:#fff;padding:9px 14px;font-size:13px;font-weight:500}
+  .course-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:0.5px solid #eee;background:#fff;cursor:pointer;transition:background 0.12s;-webkit-user-select:none;user-select:none}
+  .course-item:last-child{border-bottom:none}
+  .course-item input[type=radio]{width:18px;height:18px;margin-top:1px;accent-color:#1565C0;flex-shrink:0;cursor:pointer}
+  .course-item label{font-size:14px;color:#111;cursor:pointer;line-height:1.5}
+  .course-item label span{font-size:11px;color:#888;display:block;margin-top:2px}
+  .course-item.highlighted{background:#FFF8F5}
+  .note{font-size:11px;color:#E65100;margin-top:1rem;line-height:1.6;padding:8px 12px;border-left:3px solid #E65100;background:#FFF3E0;border-radius:0 6px 6px 0}
+  .privacy-check{display:flex;align-items:flex-start;gap:8px}
+  .privacy-check input{width:18px;height:18px;margin-top:2px;accent-color:#1565C0;flex-shrink:0;cursor:pointer}
+  .privacy-check label{font-size:13px;color:#111;cursor:pointer;line-height:1.6}
+  .submit-btn{width:100%;margin-top:1.5rem;padding:15px;background:#1565C0;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer;letter-spacing:0.3px;transition:background 0.15s;-webkit-appearance:none}
+  .submit-btn:active{background:#0D47A1;transform:scale(0.99)}
+  .submit-btn:disabled{background:#ccc;cursor:not-allowed}
+  .cert-btn{margin-top:8px;padding:10px 14px;background:#1565C0;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;-webkit-appearance:none}
+  .cert-btn:active{background:#0D47A1}
+  .cert-btn:disabled{background:#90CAF9;cursor:not-allowed}
+  .cert-btn.done{background:#43A047}
+  .success-msg{display:none;background:#E3F2FD;border:0.5px solid #90CAF9;border-radius:10px;padding:20px;text-align:center;margin-top:1.5rem;color:#0C447C;font-size:15px;line-height:1.8}
+  .success-msg b{color:#E65100;font-size:14px;display:block;margin-top:8px}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:1.5rem;-webkit-tap-highlight-color:transparent}
+  .modal-overlay.show{display:flex;animation:fadeIn 0.2s ease-out}
+  .modal-card{background:#fff;border-radius:14px;padding:28px 24px 20px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.2);animation:popIn 0.25s ease-out}
+  .modal-icon{font-size:48px;line-height:1;margin-bottom:14px}
+  .modal-title{font-size:18px;font-weight:600;color:#0C447C;margin:0 0 10px}
+  .modal-desc{font-size:14px;color:#555;line-height:1.7;margin:0 0 6px}
+  .modal-note{font-size:13px;color:#E65100;line-height:1.6;margin:14px 0 0;padding:10px 12px;background:#FFF3E0;border-radius:8px}
+  .modal-btn{margin-top:20px;width:100%;padding:13px;background:#1565C0;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;-webkit-appearance:none}
+  .modal-btn:active{background:#0D47A1}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes popIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -71,13 +106,24 @@
 
   <div class="section-title">기본 정보</div>
   <div class="field-group">
-    <div class="field-row">
-      <div class="field-label">이름 <span style="color:#E53935">*</span></div>
-      <input type="text" id="name" placeholder="홍길동">
+    <div class="cert-info" id="cert-info">
+      <span class="cert-info-icon">!</span>
+      <span>오른쪽 <strong>[본인인증]</strong> 버튼을 눌러주세요.<br>이름과 휴대폰 번호가 자동으로 입력됩니다.</span>
     </div>
-    <div class="field-row">
-      <div class="field-label">휴대폰 연락처 <span style="color:#E53935">*</span></div>
-      <input type="tel" id="phone" placeholder="010-0000-0000">
+    <div class="cert-group">
+      <div class="cert-inputs-col">
+        <div class="field-row">
+          <div class="field-label">이름 <span style="color:#E53935">*</span></div>
+          <input type="text" id="name" readonly>
+        </div>
+        <div class="field-row">
+          <div class="field-label">휴대폰 연락처 <span style="color:#E53935">*</span></div>
+          <input type="tel" id="phone" readonly>
+        </div>
+      </div>
+      <button type="button" id="cert-btn" class="cert-btn" onclick="startCert()">
+        <span class="cert-btn-text">본인인증</span>
+      </button>
     </div>
     <div class="field-row">
       <div class="field-label">연령대 <span style="color:#E53935">*</span></div>
@@ -131,67 +177,263 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-icon">🎉</div>
+    <h3 class="modal-title" id="modal-title">신청이 완료되었습니다!</h3>
+    <p class="modal-desc">소중한 신청 감사합니다.</p>
+    <p class="modal-note">교육 담당자가 교육 상담 전화를 드립니다.<br>참고하세요.</p>
+    <button class="modal-btn" onclick="closeSuccessModal()">확인</button>
+  </div>
+</div>
+
 <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const tid = urlParams.get("tid") || "";
-  const campaignkey = urlParams.get("campaignkey") || "";
+const urlParams = new URLSearchParams(window.location.search);
+const tid = urlParams.get("tid") || "";
+const campaignkey = urlParams.get("campaignkey") || "";
 
-  document.querySelectorAll(".course-item").forEach(function(item) {
-    item.addEventListener("click", function(e) {
-      if(e.target.tagName !== "INPUT" && e.target.tagName !== "LABEL") {
-        this.querySelector("input[type=radio]").checked = true;
-      }
-    });
-  });
-
-  function handleSubmit() {
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const ages = [...document.querySelectorAll("input[name=age]:checked")].map(a => a.value).join(", ");
-    const selectedCourse = document.querySelector("input[name=course]:checked");
-    const courseName = selectedCourse ? selectedCourse.nextElementSibling.childNodes[0].textContent.trim() : "";
-    const privacy = document.getElementById("privacy").checked;
-
-    if(!name)       { alert("이름을 입력해주세요."); return; }
-    if(!phone)      { alert("휴대폰 연락처를 입력해주세요."); return; }
-    if(!ages)       { alert("연령대를 선택해주세요."); return; }
-    if(!courseName) { alert("신청할 과정을 선택해주세요."); return; }
-    if(!privacy)    { alert("개인정보 수집 및 이용에 동의해주세요."); return; }
-
-    const submitBtn = document.querySelector(".submit-btn");
-    submitBtn.disabled = true;
-    submitBtn.textContent = "처리 중...";
-
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwFtusnkE6PVJuxAHAKQTFm3feZz2g6cDKd7Myi1w3MltKhKwhg09Zp-4499XsdoLZ-mQ/exec";
-
-    // ① 구글 시트 전송 — 결과와 무관하게 독립 실행
-    try {
-      fetch(scriptUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ name, phone, age: ages, course: courseName, tid: tid, campaignkey: campaignkey })
-      });
-    } catch(e) {}
-
-    // ② 애드팝콘 CPA 완료 전송 — 구글 시트와 완전히 분리하여 독립 호출
-    // 단일 페이지 완료이므로 가이드 [방식 1] 적용 (콜백 없이 즉시 호출)
-    if(typeof AdPopcorn !== "undefined") {
-      AdPopcorn.cpaCompleted();
+document.querySelectorAll(".course-item").forEach(function(item) {
+  item.addEventListener("click", function(e) {
+    if(e.target.tagName !== "INPUT" && e.target.tagName !== "LABEL") {
+      this.querySelector("input[type=radio]").checked = true;
     }
+  });
+});
 
-    // ③ 완료 UI 표시
-    showSuccessUI();
+// 휴대폰 번호 자동 하이픈 포맷 (010-1234-5678)
+function formatPhone(el) {
+  const digits = el.value.replace(/\D/g, "").slice(0, 11);
+  let out = digits;
+  if (digits.length >= 8) out = digits.slice(0,3) + "-" + digits.slice(3,7) + "-" + digits.slice(7);
+  else if (digits.length >= 4) out = digits.slice(0,3) + "-" + digits.slice(3);
+  el.value = out;
+  const hint = document.getElementById("phone-hint");
+  if (el.classList.contains("invalid") && isValidPhone(el.value)) {
+    el.classList.remove("invalid");
+    hint.classList.remove("error");
+    hint.textContent = "본인 명의의 휴대폰 번호를 입력해 주세요";
+  }
+}
+
+function isValidPhone(v) {
+  return /^01[016789]-\d{3,4}-\d{4}$/.test(v);
+}
+
+function validatePhone(el) {
+  const hint = document.getElementById("phone-hint");
+  if (!el.value) {
+    el.classList.remove("invalid");
+    hint.classList.remove("error");
+    hint.textContent = "본인 명의의 휴대폰 번호를 입력해 주세요";
+    return;
+  }
+  if (!isValidPhone(el.value)) {
+    el.classList.add("invalid");
+    hint.classList.add("error");
+    hint.textContent = "올바른 휴대폰 번호 형식이 아닙니다 (예: 010-1234-5678)";
+  } else {
+    el.classList.remove("invalid");
+    hint.classList.remove("error");
+    hint.textContent = "본인 명의의 휴대폰 번호를 입력해 주세요";
+  }
+}
+
+// GAS Web App URL (본인인증 + 저장 공용 엔드포인트)
+const API_BASE = "https://senior-ai-auth.vercel.app";
+
+// KCP 본인확인창 URL (운영)
+const KCP_CERT_URL = "https://cert.kcp.co.kr/kcp_cert/cert_view.jsp";
+
+// 본인인증 버튼 텍스트 변경 helper (SVG 아이콘 유지)
+function setCertBtnText(text) {
+  const span = document.querySelector("#cert-btn .cert-btn-text");
+  if (span) span.textContent = text;
+}
+
+// 본인인증 시작
+async function startCert() {
+  const btn = document.getElementById("cert-btn");
+  btn.disabled = true;
+  setCertBtnText("여는 중...");
+
+  try {
+    // 1) Vercel에 up_hash 생성 요청
+    const res = await fetch(API_BASE + "/api/up-hash", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    });
+    const d = await res.json();
+    if (!d.ok) throw new Error(d.error || "up_hash 생성 실패");
+
+    // 2) 본인확인창 팝업 (hidden form POST)
+    const popup = window.open("", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = KCP_CERT_URL;
+    form.target = "kcp_cert_popup";
+    form.acceptCharset = "UTF-8";
+    const fields = {
+      site_cd:            d.site_cd,
+      ordr_idxx:          d.ordr_idxx,
+      req_tx:             "CERT",
+      cert_method:        "01",
+      up_hash:            d.up_hash,
+      cert_otp_use:       "Y",
+      Ret_URL:            API_BASE + "/api/callback",
+      cert_enc_use_ext:   "Y",
+      kcp_merchant_time:  d.kcp_merchant_time,
+      kcp_cert_lib_ver:   d.kcp_cert_lib_ver,
+      web_siteid_hashYN:  d.web_siteid ? "Y" : "",
+      web_siteid:         d.web_siteid || ""
+    };
+    for (const k in fields) {
+      const i = document.createElement("input");
+      i.type = "hidden"; i.name = k; i.value = fields[k];
+      form.appendChild(i);
+    }
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+
+    setCertBtnText("진행 중...");
+
+    // 팝업 닫힘 감지: 인증 없이 취소되면 버튼 복구
+    window.certPopupRef = popup;
+    if (window.certPollInterval) clearInterval(window.certPollInterval);
+    window.certPollInterval = setInterval(function() {
+      if (!window.certPopupRef || window.certPopupRef.closed) {
+        clearInterval(window.certPollInterval);
+        window.certPollInterval = null;
+        if (!window.CERT_TOKEN) {
+          btn.disabled = false;
+          setCertBtnText("본인인증");
+        }
+      }
+    }, 500);
+  } catch(err) {
+    alert("본인인증 요청 실패: " + err.message);
+    btn.disabled = false;
+    setCertBtnText("본인인증");
+  }
+}
+
+// KCP 팝업 → Vercel callback → postMessage/BroadcastChannel 수신
+function handleCertResult(p) {
+  if (window.CERT_HANDLED) return; // 중복 처리 방지 (multi-target broadcast)
+  window.CERT_HANDLED = true;
+
+  // 폴링 해제 + 부모 팝업(cert_view.jsp) 강제 닫기
+  if (window.certPollInterval) {
+    clearInterval(window.certPollInterval);
+    window.certPollInterval = null;
+  }
+  try {
+    if (window.certPopupRef && !window.certPopupRef.closed) {
+      window.certPopupRef.close();
+    }
+  } catch (e) {}
+  const btn = document.getElementById("cert-btn");
+  if (p.ok) {
+    window.CERT_TOKEN = p.token;
+    setCertBtnText("인증 완료");
+    btn.classList.add("done");
+    btn.disabled = true;
+    if (p.user_name) {
+      const nameEl = document.getElementById("name");
+      nameEl.value = p.user_name;
+      nameEl.classList.add("filled");
+    }
+    if (p.phone_no) {
+      const phoneEl = document.getElementById("phone");
+      phoneEl.value = p.phone_no;
+      formatPhone(phoneEl);
+      phoneEl.classList.add("filled");
+    }
+    // 안내 배너를 "완료됨" 스타일로 전환
+    const info = document.getElementById("cert-info");
+    if (info) {
+      info.style.background = "#E8F5E9";
+      info.style.borderBottomColor = "#A5D6A7";
+      info.style.color = "#1B5E20";
+      info.innerHTML = '<span class="cert-info-icon" style="background:#43A047">✓</span><span><strong style="color:#1B5E20">본인인증이 완료되었습니다.</strong> 나머지 항목을 입력 후 제출해 주세요.</span>';
+    }
+  } else {
+    alert("본인인증 실패: " + (p.error || "알 수 없는 오류"));
+    btn.disabled = false;
+    setCertBtnText("본인인증");
+    window.CERT_HANDLED = false; // 재시도 허용
+  }
+}
+
+window.addEventListener("message", function(e) {
+  if (!e.data || e.data.type !== "kcp-cert") return;
+  handleCertResult(e.data.payload || {});
+});
+
+try {
+  const bc = new BroadcastChannel("kcp-cert");
+  bc.addEventListener("message", function(e) {
+    if (!e.data || e.data.type !== "kcp-cert") return;
+    handleCertResult(e.data.payload || {});
+  });
+} catch (e) {}
+
+function handleSubmit() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const ages = [...document.querySelectorAll("input[name=age]:checked")].map(a => a.value).join(", ");
+  const selectedCourse = document.querySelector("input[name=course]:checked");
+  const courseName = selectedCourse ? selectedCourse.nextElementSibling.childNodes[0].textContent.trim() : "";
+  const privacy = document.getElementById("privacy").checked;
+
+  if(!window.CERT_TOKEN) { alert("본인인증을 먼저 완료해 주세요."); return; }
+  if(!name || !phone) { alert("본인인증 정보가 올바르지 않습니다. 다시 시도해 주세요."); return; }
+  if(!ages)       { alert("연령대를 선택해주세요."); return; }
+  if(!courseName) { alert("신청할 과정을 선택해주세요."); return; }
+  if(!privacy)    { alert("개인정보 수집 및 이용에 동의해주세요."); return; }
+
+  const submitBtn = document.querySelector(".submit-btn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "처리 중...";
+
+  // ① Vercel로 저장 요청 (내부적으로 JWT 검증 → GAS → 시트)
+  try {
+    fetch(API_BASE + "/api/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cert_token: window.CERT_TOKEN, name, phone, age: ages, course: courseName, tid: tid, campaignkey: campaignkey })
+    });
+  } catch(e) {}
+
+  // ② 애드팝콘 CPA 완료 전송 — 구글 시트와 완전히 분리하여 독립 호출
+  // 단일 페이지 완료이므로 가이드 [방식 1] 적용 (콜백 없이 즉시 호출)
+  if(typeof AdPopcorn !== "undefined") {
+    AdPopcorn.cpaCompleted();
   }
 
-  function showSuccessUI() {
-    const submitBtn = document.querySelector(".submit-btn");
-    submitBtn.style.background = "#90CAF9";
-    submitBtn.textContent = "제출 완료";
-    const msg = document.getElementById("success-msg");
-    msg.style.display = "block";
-    msg.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }
+  // ③ 완료 UI 표시
+  showSuccessUI();
+}
+
+function showSuccessUI() {
+  const submitBtn = document.querySelector(".submit-btn");
+  submitBtn.style.background = "#90CAF9";
+  submitBtn.textContent = "제출 완료";
+  const modal = document.getElementById("success-modal");
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSuccessModal() {
+  const modal = document.getElementById("success-modal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("success-modal").addEventListener("click", function(e) {
+  if(e.target === this) closeSuccessModal();
+});
 </script>
 </body>
 </html>
