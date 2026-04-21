@@ -325,6 +325,14 @@ const urlParams = new URLSearchParams(window.location.search);
 const tid = urlParams.get("tid") || "";
 const campaignkey = urlParams.get("campaignkey") || "";
 
+// AdPopcorn SDK workaround: github.io는 Public Suffix라 SDK가 세팅하는
+// domain=github.io 쿠키를 브라우저가 거부함. 호스트 기본 쿠키로 직접 세팅.
+if (tid && campaignkey) {
+  const apExpires = new Date(Date.now() + 86400000).toUTCString();
+  document.cookie = "ap_tid=" + encodeURIComponent(tid) + ";expires=" + apExpires + ";path=/";
+  document.cookie = "ap_campaignkey=" + encodeURIComponent(campaignkey) + ";expires=" + apExpires + ";path=/";
+}
+
 function updateCourseSelection() {
   document.querySelectorAll(".course-item").forEach(function(item) {
     const radio = item.querySelector("input[type=radio]");
