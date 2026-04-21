@@ -418,15 +418,11 @@ function startCert() {
   btn.disabled = true;
   setCertBtnText("여는 중...");
 
-  // cert-start 엔드포인트가 up-hash 생성 + 로딩 화면 + KCP auto-submit을 처리한다.
-  // 모바일: 크기 미지정 → 새 탭 (사이즈 팝업은 차단되거나 UX 불편)
-  // 데스크탑: 지정 크기 팝업 (폼 옆에 나란히 보여 UX 우수)
-  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const popup = isMobile
-    ? window.open(API_BASE + "/api/cert-start", "kcp_cert_popup")
-    : window.open(API_BASE + "/api/cert-start", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
+  // 팝업을 cert-start 엔드포인트로 직접 열면, 서버가 up-hash 생성 +
+  // "창을 닫지 마세요" 로딩 화면 + KCP로 auto-submit 까지 처리한다.
+  const popup = window.open(API_BASE + "/api/cert-start", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
   if (!popup) {
-    alert("팝업/새 탭이 차단되었습니다. 브라우저의 팝업 차단을 해제해 주세요.");
+    alert("팝업이 차단되었습니다. 브라우저 팝업 차단을 해제해 주세요.");
     btn.disabled = false;
     setCertBtnText("본인인증");
     return;
