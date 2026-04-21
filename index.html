@@ -418,8 +418,17 @@ function startCert() {
   btn.disabled = true;
   setCertBtnText("여는 중...");
 
-  // 팝업을 cert-start 엔드포인트로 직접 열면, 서버가 up-hash 생성 +
-  // "창을 닫지 마세요" 로딩 화면 + KCP로 auto-submit 까지 처리한다.
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // 모바일: 팝업 권한 없이 같은 탭에서 이동 → KCP → 콜백이 이 URL로 리다이렉트
+    saveFormStateForCert();
+    const returnUrl = location.origin + location.pathname + location.search;
+    location.href = API_BASE + "/api/cert-start?mode=redirect&return=" + encodeURIComponent(returnUrl);
+    return;
+  }
+
+  // 데스크탑: 지정 크기 팝업 (폼 옆에 나란히)
   const popup = window.open(API_BASE + "/api/cert-start", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
   if (!popup) {
     alert("팝업이 차단되었습니다. 브라우저 팝업 차단을 해제해 주세요.");
@@ -443,6 +452,50 @@ function startCert() {
       }
     }
   }, 500);
+}
+
+// 모바일 redirect 플로우: 페이지 이동 전 폼 상태 저장
+function saveFormStateForCert() {
+  try {
+    const age = (document.querySelector("input[name=age]:checked") || {}).value || "";
+    const course = (document.querySelector("input[name=course]:checked") || {}).value || "";
+    const privacy = document.getElementById("privacy").checked;
+    sessionStorage.setItem("cert_form_state", JSON.stringify({
+      age: age,
+      course: course,
+      privacy: privacy,
+      savedAt: Date.now()
+    }));
+  } catch (e) {}
+}
+
+// 모바일 redirect 복귀 시 폼 상태 복원
+function restoreFormStateAfterCert() {
+  try {
+    const raw = sessionStorage.getItem("cert_form_state");
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    if (Date.now() - (s.savedAt || 0) > 600000) {
+      sessionStorage.removeItem("cert_form_state");
+      return;
+    }
+    if (s.age) {
+      const ageInput = document.querySelector('input[name=age][value="' + s.age + '"]');
+      if (ageInput) ageInput.checked = true;
+    }
+    if (s.course) {
+      const courseInput = document.querySelector('input[name=course][value="' + s.course + '"]');
+      if (courseInput) {
+        courseInput.checked = true;
+        if (typeof updateCourseSelection === "function") updateCourseSelection();
+      }
+    }
+    if (s.privacy) {
+      const pv = document.getElementById("privacy");
+      if (pv) pv.checked = true;
+    }
+    sessionStorage.removeItem("cert_form_state");
+  } catch (e) {}
 }
 
 // KCP 팝업 → Vercel callback → postMessage/BroadcastChannel 수신
@@ -509,6 +562,34 @@ try {
     handleCertResult(e.data.payload || {});
   });
 } catch (e) {}
+
+// 모바일 redirect 플로우: 페이지 로드 시 쿼리스트링에서 인증 결과를 받아 처리
+(function handleCertRedirectReturn() {
+  const qs = new URLSearchParams(location.search);
+  const cert = qs.get("cert");
+  if (!cert) return;
+
+  if (cert === "ok") {
+    const token = qs.get("token");
+    if (token) {
+      restoreFormStateAfterCert();
+      handleCertResult({
+        ok: true,
+        token: token,
+        user_name: qs.get("name") || "",
+        phone_no: qs.get("phone") || ""
+      });
+    }
+  } else if (cert === "fail") {
+    restoreFormStateAfterCert();
+    handleCertResult({ ok: false, error: qs.get("error") || "본인인증 실패" });
+  }
+
+  // 토큰 등 민감 파라미터는 URL에서 제거 (tid, campaignkey는 유지)
+  ["cert", "token", "name", "phone", "error"].forEach(function(k) { qs.delete(k); });
+  const newSearch = qs.toString();
+  history.replaceState(null, "", location.pathname + (newSearch ? "?" + newSearch : ""));
+})();
 
 function handleSubmit() {
   const name = document.getElementById("name").value.trim();
