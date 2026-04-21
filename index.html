@@ -137,8 +137,13 @@
   .cert-btn:hover:not(:disabled),.submit-btn:hover:not(:disabled),.modal-btn:hover{background:var(--primary-dark)}
   .cert-btn:active:not(:disabled),.submit-btn:active:not(:disabled),.modal-btn:active{transform:scale(0.99)}
   .cert-btn:disabled,.submit-btn:disabled{background:var(--border);color:var(--text-subtle);cursor:not-allowed}
-  .cert-btn.done{background:var(--success)}
-  .cert-btn.done:hover:not(:disabled){background:#16A34A}
+  .cert-btn.done{
+    background:var(--success-soft);
+    color:#15803D;
+    box-shadow:inset 0 0 0 1px rgba(34,197,94,0.25);
+    font-weight:600;
+    letter-spacing:-0.2px;
+  }
 
   .age-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
   .age-item{display:flex;align-items:center;cursor:pointer}
