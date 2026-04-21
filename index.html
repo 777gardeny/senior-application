@@ -589,6 +589,12 @@ try {
   ["cert", "token", "name", "phone", "error"].forEach(function(k) { qs.delete(k); });
   const newSearch = qs.toString();
   history.replaceState(null, "", location.pathname + (newSearch ? "?" + newSearch : ""));
+
+  // 인증 영역으로 스크롤 (DOM 업데이트 적용 후)
+  setTimeout(function() {
+    const el = document.getElementById("cert-info");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 100);
 })();
 
 function handleSubmit() {
