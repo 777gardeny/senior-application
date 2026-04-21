@@ -403,11 +403,8 @@ function validatePhone(el) {
   }
 }
 
-// GAS Web App URL (본인인증 + 저장 공용 엔드포인트)
+// 본인인증 + 저장 공용 엔드포인트 (Vercel)
 const API_BASE = "https://senior-ai-auth.vercel.app";
-
-// KCP 본인확인창 URL (운영)
-const KCP_CERT_URL = "https://cert.kcp.co.kr/kcp_cert/cert_view.jsp";
 
 // 본인인증 버튼 텍스트 변경 helper (SVG 아이콘 유지)
 function setCertBtnText(text) {
@@ -416,71 +413,36 @@ function setCertBtnText(text) {
 }
 
 // 본인인증 시작
-async function startCert() {
+function startCert() {
   const btn = document.getElementById("cert-btn");
   btn.disabled = true;
   setCertBtnText("여는 중...");
 
-  try {
-    // 1) Vercel에 up_hash 생성 요청
-    const res = await fetch(API_BASE + "/api/up-hash", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({})
-    });
-    const d = await res.json();
-    if (!d.ok) throw new Error(d.error || "up_hash 생성 실패");
-
-    // 2) 본인확인창 팝업 (hidden form POST)
-    const popup = window.open("", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = KCP_CERT_URL;
-    form.target = "kcp_cert_popup";
-    form.acceptCharset = "UTF-8";
-    const fields = {
-      site_cd:            d.site_cd,
-      ordr_idxx:          d.ordr_idxx,
-      req_tx:             "CERT",
-      cert_method:        "01",
-      up_hash:            d.up_hash,
-      cert_otp_use:       "Y",
-      Ret_URL:            API_BASE + "/api/callback",
-      cert_enc_use_ext:   "Y",
-      kcp_merchant_time:  d.kcp_merchant_time,
-      kcp_cert_lib_ver:   d.kcp_cert_lib_ver,
-      web_siteid_hashYN:  d.web_siteid ? "Y" : "",
-      web_siteid:         d.web_siteid || ""
-    };
-    for (const k in fields) {
-      const i = document.createElement("input");
-      i.type = "hidden"; i.name = k; i.value = fields[k];
-      form.appendChild(i);
-    }
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-
-    setCertBtnText("진행 중...");
-
-    // 팝업 닫힘 감지: 인증 없이 취소되면 버튼 복구
-    window.certPopupRef = popup;
-    if (window.certPollInterval) clearInterval(window.certPollInterval);
-    window.certPollInterval = setInterval(function() {
-      if (!window.certPopupRef || window.certPopupRef.closed) {
-        clearInterval(window.certPollInterval);
-        window.certPollInterval = null;
-        if (!window.CERT_TOKEN) {
-          btn.disabled = false;
-          setCertBtnText("본인인증");
-        }
-      }
-    }, 500);
-  } catch(err) {
-    alert("본인인증 요청 실패: " + err.message);
+  // 팝업을 cert-start 엔드포인트로 직접 열면, 서버가 up-hash 생성 +
+  // "창을 닫지 마세요" 로딩 화면 + KCP로 auto-submit 까지 처리한다.
+  const popup = window.open(API_BASE + "/api/cert-start", "kcp_cert_popup", "width=420,height=640,scrollbars=yes");
+  if (!popup) {
+    alert("팝업이 차단되었습니다. 브라우저 팝업 차단을 해제해 주세요.");
     btn.disabled = false;
     setCertBtnText("본인인증");
+    return;
   }
+
+  setCertBtnText("진행 중...");
+
+  // 팝업 닫힘 감지: 인증 없이 취소되면 버튼 복구
+  window.certPopupRef = popup;
+  if (window.certPollInterval) clearInterval(window.certPollInterval);
+  window.certPollInterval = setInterval(function() {
+    if (!window.certPopupRef || window.certPopupRef.closed) {
+      clearInterval(window.certPollInterval);
+      window.certPollInterval = null;
+      if (!window.CERT_TOKEN) {
+        btn.disabled = false;
+        setCertBtnText("본인인증");
+      }
+    }
+  }, 500);
 }
 
 // KCP 팝업 → Vercel callback → postMessage/BroadcastChannel 수신
