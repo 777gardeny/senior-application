@@ -320,6 +320,16 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="duplicate-modal" role="dialog" aria-modal="true" aria-labelledby="duplicate-modal-title">
+  <div class="modal-card">
+    <div class="modal-icon">ℹ️</div>
+    <h3 class="modal-title" id="duplicate-modal-title">이미 신청하신 번호입니다</h3>
+    <p class="modal-desc">해당 전화번호로 신청 내역이 확인되었습니다.</p>
+    <p class="modal-note">문의사항이 있으시면 교육 담당자에게 연락 주세요.</p>
+    <button class="modal-btn" onclick="closeDuplicateModal()">확인</button>
+  </div>
+</div>
+
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const tid = urlParams.get("tid") || "";
@@ -622,23 +632,32 @@ function handleSubmit() {
   submitBtn.disabled = true;
   submitBtn.textContent = "처리 중...";
 
-  // ① Vercel로 저장 요청 (내부적으로 JWT 검증 → GAS → 시트)
-  try {
-    fetch(API_BASE + "/api/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cert_token: window.CERT_TOKEN, name, phone, age, course: courseName, tid: tid, campaignkey: campaignkey })
-    });
-  } catch(e) {}
-
-  // ② 애드팝콘 CPA 완료 전송 — 구글 시트와 완전히 분리하여 독립 호출
-  // 단일 페이지 완료이므로 가이드 [방식 1] 적용 (콜백 없이 즉시 호출)
-  if(typeof AdPopcorn !== "undefined") {
-    AdPopcorn.cpaCompleted();
-  }
-
-  // ③ 완료 UI 표시
-  showSuccessUI();
+  fetch(API_BASE + "/api/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cert_token: window.CERT_TOKEN, name, phone, age, course: courseName, tid: tid, campaignkey: campaignkey })
+  }).then(function(res) {
+    return res.json().catch(function() { return { ok: false }; });
+  }).then(function(result) {
+    if (result && result.duplicate) {
+      showDuplicateUI();
+      return;
+    }
+    if (!result || !result.ok) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "신청서 제출";
+      alert("신청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      return;
+    }
+    if (typeof AdPopcorn !== "undefined") {
+      AdPopcorn.cpaCompleted();
+    }
+    showSuccessUI();
+  }).catch(function() {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "신청하기";
+    alert("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+  });
 }
 
 function showSuccessUI() {
@@ -656,8 +675,26 @@ function closeSuccessModal() {
   document.body.style.overflow = "";
 }
 
+function showDuplicateUI() {
+  const submitBtn = document.querySelector(".submit-btn");
+  submitBtn.style.background = "#90CAF9";
+  submitBtn.textContent = "이미 신청됨";
+  const modal = document.getElementById("duplicate-modal");
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDuplicateModal() {
+  const modal = document.getElementById("duplicate-modal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
 document.getElementById("success-modal").addEventListener("click", function(e) {
   if(e.target === this) closeSuccessModal();
+});
+document.getElementById("duplicate-modal").addEventListener("click", function(e) {
+  if(e.target === this) closeDuplicateModal();
 });
 </script>
 </body>
